@@ -1,0 +1,156 @@
+var assert 	= require('assert');
+var fs 		= require('fs');
+var path 	= require('path');
+var sinon 	= require('sinon');
+
+var uniquefilename = require('../index');
+
+
+
+describe('Test utility functions', function() {
+	it('string to number conversion', function (done) {
+		assert.equal(uniquefilename.stringToNumber('0', '01'), 1);
+		assert.equal(uniquefilename.stringToNumber('1', '01'), 2);
+		assert.equal(uniquefilename.stringToNumber('00', '01'), 3);
+		assert.equal(uniquefilename.stringToNumber('01', '01'), 4);
+		assert.equal(uniquefilename.stringToNumber('10', '01'), 5);
+		assert.equal(uniquefilename.stringToNumber('11', '01'), 6);
+		assert.equal(uniquefilename.stringToNumber('000', '01'), 7);
+		assert.equal(uniquefilename.stringToNumber('001', '01'), 8);
+		assert.equal(uniquefilename.stringToNumber('010', '01'), 9);
+
+		assert.equal(uniquefilename.stringToNumber('a', 'abc'), 1);
+		assert.equal(uniquefilename.stringToNumber('b', 'abc'), 2);
+		assert.equal(uniquefilename.stringToNumber('c', 'abc'), 3);
+		assert.equal(uniquefilename.stringToNumber('aa', 'abc'), 4);
+		assert.equal(uniquefilename.stringToNumber('ac', 'abc'), 6);
+		assert.equal(uniquefilename.stringToNumber('ba', 'abc'), 7);
+		assert.equal(uniquefilename.stringToNumber('ca', 'abc'), 10);
+		assert.equal(uniquefilename.stringToNumber('cc', 'abc'), 12);
+		assert.equal(uniquefilename.stringToNumber('aaa', 'abc'), 13);
+		assert.equal(uniquefilename.stringToNumber('bab', 'abc'), 23);
+		assert.equal(uniquefilename.stringToNumber('bbc', 'abc'), 27);
+		assert.equal(uniquefilename.stringToNumber('cab', 'abc'), 32);
+		assert.equal(uniquefilename.stringToNumber('cca', 'abc'), 37);
+		assert.equal(uniquefilename.stringToNumber('ccc', 'abc'), 39);
+		assert.equal(uniquefilename.stringToNumber('aaaa', 'abc'), 40);
+
+		return done();
+	});
+
+
+
+	it('number to string conversion', function (done) {
+		//assert.equal(uniquefilename.numberToString(1, '01'), '0');
+		//assert.equal(uniquefilename.numberToString(2, '01'), '1');
+		//assert.equal(uniquefilename.numberToString(3, '01'), '00');
+		//assert.equal(uniquefilename.numberToString(4, '01'), '01');
+		//assert.equal(uniquefilename.numberToString(5, '01'), '10');
+		//assert.equal(uniquefilename.numberToString(6, '01'), '11');
+		//assert.equal(uniquefilename.numberToString(7, '01'), '000');
+		//assert.equal(uniquefilename.numberToString(8, '01'), '001');
+		//assert.equal(uniquefilename.numberToString(9, '01'), '010');
+
+		 
+		//assert.equal(uniquefilename.numberToString(1, 'abc'), 'a');
+		//assert.equal(uniquefilename.numberToString(2, 'abc'), 'b');
+		//assert.equal(uniquefilename.numberToString(3, 'abc'), 'c');
+		//assert.equal(uniquefilename.numberToString(4, 'abc'), 'aa');
+		//assert.equal(uniquefilename.numberToString(6, 'abc'), 'ac');
+		//assert.equal(uniquefilename.numberToString(7, 'abc'), 'ba');
+		//assert.equal(uniquefilename.numberToString(10, 'abc'), 'ca');
+		//assert.equal(uniquefilename.numberToString(12, 'abc'), 'cc');
+		//assert.equal(uniquefilename.numberToString(13, 'abc'), 'aaa');
+		//assert.equal(uniquefilename.numberToString(23, 'abc'), 'bab');
+		//assert.equal(uniquefilename.numberToString(27, 'abc'), 'bbc');
+		//assert.equal(uniquefilename.numberToString(32, 'abc'), 'cab');
+		//assert.equal(uniquefilename.numberToString(37, 'abc'), 'cca');
+		//assert.equal(uniquefilename.numberToString(39, 'abc'), 'ccc');
+		//assert.equal(uniquefilename.numberToString(40, 'abc'), 'aaaa');
+
+		// 1,2,2,2,3,3,3,3,4
+		//uniquefilename.numberToString(2, 'abc');
+		uniquefilename.numberToString(4, 'abc');
+		//uniquefilename.numberToString(7, 'abc');
+		//uniquefilename.numberToString(12, 'abc');
+		//uniquefilename.numberToString(13, 'abc');
+		//uniquefilename.numberToString(27, 'abc');
+		//uniquefilename.numberToString(32, 'abc');
+		//uniquefilename.numberToString(39, 'abc');
+		//uniquefilename.numberToString(40, 'abc');
+		
+	
+
+
+		return done();
+	});
+});
+
+
+describe('Get non existing file path', function() {
+	beforeEach(function () {
+		sinon.stub(fs, 'exists').yields(true);
+	});
+
+	afterEach(function () {
+		fs.exists.restore();
+	});
+
+	it('should return the first non-existing file path', function (done) {
+		fs.exists.withArgs('/path/to/dir/file.jpg').yields(false);
+
+		uniquefilename.get('/path/to/dir/file.jpg', {}, function(filename) {
+			assert.equal(filename, '/path/to/dir/file.jpg');
+
+			fs.exists.withArgs('/path/to/dir/file.jpg').yields(true);
+			fs.exists.withArgs('/path/to/dir/file-20.jpg').yields(false);
+
+			uniquefilename.get('/path/to/dir/file.jpg', {}, function(filename) {
+				assert.equal(filename, '/path/to/dir/file-20.jpg');
+				return done();
+			});
+		});
+	});
+/*
+
+	it('should return the first non-existing file path - with separator and padding options', function (done) {
+		fs.exists.withArgs('/path/to/dir/file.0003.jpg').yields(false);
+
+		uniquefilename.get('/path/to/dir/file.jpg', {separator: '.', paddingCharacter: '0', paddingSize: 4}, function(filename) {
+			assert.equal(filename, '/path/to/dir/file.0003.jpg');    
+
+			fs.exists.withArgs('/path/to/dir/file~ZZ11.jpg').yields(false);
+
+			uniquefilename.get('/path/to/dir/file.jpg', {separator: '~', paddingCharacter: 'Z', paddingSize: 4}, function(filename) {
+				assert.equal(filename, '/path/to/dir/file~ZZ11.jpg'); 
+				return done();
+			});
+		});
+	});
+
+	*/
+
+/*
+	it('should return the first non-existing file path - with alpha mode', function (done) {
+		fs.exists.withArgs('/path/to/dir/file.000h.jpg').yields(false);
+
+		uniquefilename.get('/path/to/dir/file.jpg', {separator: '.', paddingCharacter: '0', paddingSize: 4, mode: 'alpha'}, function(filename) {
+			assert.equal(filename, '/path/to/dir/file.000h.jpg');    
+
+			fs.exists.withArgs('/path/to/dir/file~aabc.jpg').yields(false);
+
+			uniquefilename.get('/path/to/dir/file.jpg', {separator: '~', paddingCharacter: 'a', paddingSize: 4, mode: 'alpha'}, function(filename) {
+				assert.equal(filename, '/path/to/dir/file~aabc.jpg'); 
+
+				fs.exists.withArgs('/path/to/dir/file!000abc.jpg').yields(false);
+
+				uniquefilename.get('/path/to/dir/file.jpg', {separator: '!', paddingCharacter: '0', paddingSize: 6, mode: 'alpha'}, function(filename) {
+					assert.equal(filename, '/path/to/dir/file!000abc.jpg'); 
+					return done();
+				});
+			});
+		});
+	});
+*/
+});
+
