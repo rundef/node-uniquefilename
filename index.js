@@ -2,86 +2,6 @@ var fs 		= require('fs');
 var path 	= require('path');
 
 
-/*
-
-    public static String encode(int number) {
-        if (number == 0) {
-            return ALPHABET.substring(0, 1);
-        }
-
-        StringBuilder code = new StringBuilder(16);
-
-        while (number > 0) {
-            int remainder = number % BASE;
-            number /= BASE;
-
-            code.append(ALPHABET.charAt(remainder));
-        }
-
-        return code.reverse().toString();
-    }
-
-     */
-  
-
-function numberToString77(nbr, charset, debug) {
-	debug 			= debug || false;
-
-	var charset_len = charset.length;
-	var ret 		= '';
-
-	while(nbr != 0) {
-		var remainder = nbr % charset_len;
-        nbr = parseInt(nbr / charset_len);
-        //nbr = Math.round(nbr / charset_len);
-
-        ret += charset.charAt(remainder);
-
-        if(nbr < charset_len) {
-        	if(nbr > 0) {
-        	ret += charset.charAt(nbr);
-        	}
-        	break;
-        }
-	}
-
-	return ret.split("").reverse().join("");
-}
-
-
-function numberToString55(nbr, charset) {
-	var charset_len = charset.length;
-	var ret 		= '';
-
-	while(nbr > 0) {
-		var remainder = nbr % charset_len;
-		var multi = Math.floor(nbr / charset_len);
-		if(multi > charset_len) {
-			multi = charset_len;
-		}
-
-
-		if(modulo == 0) {
-			ret = charset.charAt(charset_len-1) + ret;
-			nbr -= (multi * charset_len);
-			continue;
-		}
-
-		ret = charset.charAt(modulo-1) + ret;
-		if(nbr < charset_len) {
-			break;
-		}
-		nbr -= (multi * charset_len);
-	}
-
-	//if(nbr > 0) {
-	//	ret += charset.charAt(nbr - 1);
-	//}
-
-	return ret;
-}
-
-
 
 
 function stringToNumber(str, charset) {
@@ -103,102 +23,59 @@ function stringToNumber(str, charset) {
 
 
 function numberToString(nbr, charset) {
-	var charset_len = charset.length;
-	var ret 		= '';
-	var str_length  = 0;
+	if(nbr == 1)
+		return charset.charAt(0);
+
+	var charset_len 	= charset.length;
+	var str_len  		= 0;
+	var str_this_len 	= 0;
 
 
-
-	for(var maxpower = 5; maxpower >= 1; maxpower--) {
-		if(str_length > 0) {
-
-		}
-		else {
-			var maxvalue = Math.pow(charset_len, maxpower);
-			for(var tmp = maxpower - 1; tmp >= 1; tmp--) {
-				maxvalue += Math.pow(charset_len, tmp);
-			}
-
-
-			if(maxvalue < nbr) {
-				str_length = maxpower;
-				console.log(str_length);
-			}
+	for(var maxpower = 5; maxpower >= 0; maxpower--) {
+		var maxvalue = Math.pow(charset_len, maxpower);
+		for(var tmp = maxpower - 1; tmp >= 1; tmp--) {
+			maxvalue += Math.pow(charset_len, tmp);
 		}
 
+		if(maxvalue < nbr) {
+			str_len  	 = maxpower + 1;
+			str_this_len = (maxvalue + Math.pow(charset_len, maxpower + 1)) - maxvalue;
+
+			break;
+		}
 	}
+
+
+	if(str_len == 0)
+		return null;
+
+
+	var str = '';
+	while(--str_len >= 0) {
+		if(str_len == 0) {
+			str += charset.charAt(nbr - 1);
+			break;
+		}
+
+		
+		str_this_len = Math.pow(charset_len, str_len);
+		var initial = 0;
+		var tmp = 0;
+		for(tmp = str_len - 1; tmp >= 1; tmp--) {
+			initial += Math.pow(charset_len, tmp);
+		}
+		for(tmp = charset_len; tmp >= 1; tmp--) {
+			var tmp_cmp = initial + (tmp * str_this_len);
+			if(tmp_cmp < nbr)
+				break;
+		}
+
+		nbr -= tmp * str_this_len;
+		str += charset.charAt(tmp - 1);
+	}
+
+	return str;
 }
-
-
-
-function numberToString5(nbr, charset) {
-	debug = debug || false;
-	var charset_len = charset.length;
-	var ret 		= '';
-	var str_length  = 0;
-
-
-
-	for(var maxpower = 5; maxpower >= 1; maxpower--) {
-		var tmp = Math.pow(charset_len, maxpower);
-		var multi = Math.floor((nbr-1) / tmp);
-
-		/*
-		var power = len - i - 1;
-		ret += Math.pow(charset_len, power) * (chrIndex + 1);
-		*/
-
-
-
-		if(tmp < nbr) {
-if(debug) { console.log('maxpower='+maxpower+' nbr='+nbr+' tmp='+tmp+' multi='+multi); }
-
-			var idx = multi - 1;
-			idx = tmp/Math.pow(charset_len, (maxpower-1));
-if(debug) { console.log('idx1='+idx); }
-			if(idx >= charset_len) {
-				idx = 0;
-			}
-
-			nbr -= (tmp*multi);
-			//if(maxpower >= 1) {
-			//	idx--;
-			//}
-
-
-if(debug) { console.log('idx='+idx+' rest='+nbr); }
-			ret += charset.charAt(idx);
-			if(nbr == 0) {
-				return ret;
-			}
-
-/*
-			if(multi > 0) {
-				
-				var idx = multi - 1;
-
-				if(maxpower >= 2) {
-					idx = nbr + 1;
-				}
-
-				ret += charset.charAt(idx);
-
-				if(nbr == 0) {
-					return ret;
-				}
-
-			}
-			*/
-		}
-	}
-
-	if(nbr > 0 && nbr <= charset_len) {
-		ret += charset.charAt(nbr - 1);
-	}
-
-	return ret;
-}
-
 
 
 	
@@ -213,17 +90,7 @@ function findIncrementalUniqueFilename(file, options, callback) {
 			append = '' + file.increment;
 		}
 		else {
-			var tmp = file.increment;
-			
-
-			if(tmp > 26) {
-				var div = Math.floor(tmp / 26);
-				tmp = tmp % 26;
-			}
-
-			if(tmp > 0) {
-				append += String.fromCharCode(97 + tmp - 1);
-			}
+			append = numberToString(file.increment, options.charset);
 		}
 		
 		
@@ -245,7 +112,7 @@ function findIncrementalUniqueFilename(file, options, callback) {
 					file.increment += 1;
 				}
 				else {
-					file.increment = 2;
+					file.increment = options.mode == 'numeric' ? 2 : 1;
 				}
 				return findIncrementalUniqueFilename(file, options, callback);
 			});

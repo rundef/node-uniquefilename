@@ -34,55 +34,46 @@ describe('Test utility functions', function() {
 		assert.equal(uniquefilename.stringToNumber('cca', 'abc'), 37);
 		assert.equal(uniquefilename.stringToNumber('ccc', 'abc'), 39);
 		assert.equal(uniquefilename.stringToNumber('aaaa', 'abc'), 40);
+		assert.equal(uniquefilename.stringToNumber('abab', 'abc'), 50);
 
-		return done();
+
+		done();
 	});
 
 
 
 	it('number to string conversion', function (done) {
-		//assert.equal(uniquefilename.numberToString(1, '01'), '0');
-		//assert.equal(uniquefilename.numberToString(2, '01'), '1');
-		//assert.equal(uniquefilename.numberToString(3, '01'), '00');
-		//assert.equal(uniquefilename.numberToString(4, '01'), '01');
-		//assert.equal(uniquefilename.numberToString(5, '01'), '10');
-		//assert.equal(uniquefilename.numberToString(6, '01'), '11');
-		//assert.equal(uniquefilename.numberToString(7, '01'), '000');
-		//assert.equal(uniquefilename.numberToString(8, '01'), '001');
-		//assert.equal(uniquefilename.numberToString(9, '01'), '010');
+		assert.equal(uniquefilename.numberToString(1, '01'), '0');
+		assert.equal(uniquefilename.numberToString(2, '01'), '1');
+		assert.equal(uniquefilename.numberToString(3, '01'), '00');
+		assert.equal(uniquefilename.numberToString(4, '01'), '01');
+		assert.equal(uniquefilename.numberToString(5, '01'), '10');
+		assert.equal(uniquefilename.numberToString(6, '01'), '11');
+		assert.equal(uniquefilename.numberToString(7, '01'), '000');
+		assert.equal(uniquefilename.numberToString(8, '01'), '001');
+		assert.equal(uniquefilename.numberToString(9, '01'), '010');
+
 
 		 
-		//assert.equal(uniquefilename.numberToString(1, 'abc'), 'a');
-		//assert.equal(uniquefilename.numberToString(2, 'abc'), 'b');
-		//assert.equal(uniquefilename.numberToString(3, 'abc'), 'c');
-		//assert.equal(uniquefilename.numberToString(4, 'abc'), 'aa');
-		//assert.equal(uniquefilename.numberToString(6, 'abc'), 'ac');
-		//assert.equal(uniquefilename.numberToString(7, 'abc'), 'ba');
-		//assert.equal(uniquefilename.numberToString(10, 'abc'), 'ca');
-		//assert.equal(uniquefilename.numberToString(12, 'abc'), 'cc');
-		//assert.equal(uniquefilename.numberToString(13, 'abc'), 'aaa');
-		//assert.equal(uniquefilename.numberToString(23, 'abc'), 'bab');
-		//assert.equal(uniquefilename.numberToString(27, 'abc'), 'bbc');
-		//assert.equal(uniquefilename.numberToString(32, 'abc'), 'cab');
-		//assert.equal(uniquefilename.numberToString(37, 'abc'), 'cca');
-		//assert.equal(uniquefilename.numberToString(39, 'abc'), 'ccc');
-		//assert.equal(uniquefilename.numberToString(40, 'abc'), 'aaaa');
+		assert.equal(uniquefilename.numberToString(1, 'abc'), 'a');
+		assert.equal(uniquefilename.numberToString(2, 'abc'), 'b');
+		assert.equal(uniquefilename.numberToString(3, 'abc'), 'c');
+		assert.equal(uniquefilename.numberToString(4, 'abc'), 'aa');
+		assert.equal(uniquefilename.numberToString(6, 'abc'), 'ac');
+		assert.equal(uniquefilename.numberToString(7, 'abc'), 'ba');
+		assert.equal(uniquefilename.numberToString(10, 'abc'), 'ca');
+		assert.equal(uniquefilename.numberToString(12, 'abc'), 'cc');
+		assert.equal(uniquefilename.numberToString(13, 'abc'), 'aaa');
+		assert.equal(uniquefilename.numberToString(23, 'abc'), 'bab');
+		assert.equal(uniquefilename.numberToString(27, 'abc'), 'bbc');
+		assert.equal(uniquefilename.numberToString(32, 'abc'), 'cab');
+		assert.equal(uniquefilename.numberToString(37, 'abc'), 'cca');
+		assert.equal(uniquefilename.numberToString(39, 'abc'), 'ccc');
+		assert.equal(uniquefilename.numberToString(40, 'abc'), 'aaaa');
+		assert.equal(uniquefilename.numberToString(50, 'abc'), 'abab');
 
-		// 1,2,2,2,3,3,3,3,4
-		//uniquefilename.numberToString(2, 'abc');
-		uniquefilename.numberToString(4, 'abc');
-		//uniquefilename.numberToString(7, 'abc');
-		//uniquefilename.numberToString(12, 'abc');
-		//uniquefilename.numberToString(13, 'abc');
-		//uniquefilename.numberToString(27, 'abc');
-		//uniquefilename.numberToString(32, 'abc');
-		//uniquefilename.numberToString(39, 'abc');
-		//uniquefilename.numberToString(40, 'abc');
 		
-	
-
-
-		return done();
+		done();
 	});
 });
 
@@ -107,11 +98,11 @@ describe('Get non existing file path', function() {
 
 			uniquefilename.get('/path/to/dir/file.jpg', {}, function(filename) {
 				assert.equal(filename, '/path/to/dir/file-20.jpg');
-				return done();
+				done();
 			});
 		});
 	});
-/*
+
 
 	it('should return the first non-existing file path - with separator and padding options', function (done) {
 		fs.exists.withArgs('/path/to/dir/file.0003.jpg').yields(false);
@@ -121,36 +112,91 @@ describe('Get non existing file path', function() {
 
 			fs.exists.withArgs('/path/to/dir/file~ZZ11.jpg').yields(false);
 
-			uniquefilename.get('/path/to/dir/file.jpg', {separator: '~', paddingCharacter: 'Z', paddingSize: 4}, function(filename) {
+			uniquefilename.get('/path/to/dir/file.jpg', {separator: '~', paddingCharacter: 'Z', paddingSize: 4}, 
+				function(filename) {
+
 				assert.equal(filename, '/path/to/dir/file~ZZ11.jpg'); 
-				return done();
+				done();
 			});
 		});
 	});
 
-	*/
 
-/*
+
 	it('should return the first non-existing file path - with alpha mode', function (done) {
 		fs.exists.withArgs('/path/to/dir/file.000h.jpg').yields(false);
 
-		uniquefilename.get('/path/to/dir/file.jpg', {separator: '.', paddingCharacter: '0', paddingSize: 4, mode: 'alpha'}, function(filename) {
-			assert.equal(filename, '/path/to/dir/file.000h.jpg');    
+		uniquefilename.get('/path/to/dir/file.jpg', {separator: '.', paddingCharacter: '0', paddingSize: 4, mode: 'alpha'}, 
+			function(filename) {
 
+			assert.equal(filename, '/path/to/dir/file.000h.jpg');    
 			fs.exists.withArgs('/path/to/dir/file~aabc.jpg').yields(false);
 
-			uniquefilename.get('/path/to/dir/file.jpg', {separator: '~', paddingCharacter: 'a', paddingSize: 4, mode: 'alpha'}, function(filename) {
-				assert.equal(filename, '/path/to/dir/file~aabc.jpg'); 
+			uniquefilename.get('/path/to/dir/file.jpg', {separator: '~', paddingCharacter: 'a', paddingSize: 4, mode: 'alpha'}, 
+				function(filename) {
 
+				assert.equal(filename, '/path/to/dir/file~aabc.jpg'); 
 				fs.exists.withArgs('/path/to/dir/file!000abc.jpg').yields(false);
 
-				uniquefilename.get('/path/to/dir/file.jpg', {separator: '!', paddingCharacter: '0', paddingSize: 6, mode: 'alpha'}, function(filename) {
+				uniquefilename.get('/path/to/dir/file.jpg', {separator: '!', paddingCharacter: '0', paddingSize: 6, mode: 'alpha'}, 
+					function(filename) {
+
 					assert.equal(filename, '/path/to/dir/file!000abc.jpg'); 
-					return done();
+					done();
 				});
 			});
 		});
 	});
-*/
+
+
+
+	it('should return the first non-existing file path - with ALPHA mode', function (done) {
+		fs.exists.withArgs('/path/to/dir/file-CD.jpg').yields(false);
+
+		uniquefilename.get('/path/to/dir/file.jpg', {mode: 'ALPHA'}, 
+			function(filename) {
+
+			assert.equal(filename, '/path/to/dir/file-CD.jpg'); 
+			done();
+		});
+	});
+
+
+
+	it('should return the first non-existing file path - with alphanumeric mode', function (done) {
+		fs.exists.withArgs('/path/to/dir/file-6a.jpg').yields(false);
+
+		uniquefilename.get('/path/to/dir/file.jpg', {mode: 'alphanumeric'}, 
+			function(filename) {
+
+			assert.equal(filename, '/path/to/dir/file-6a.jpg'); 
+			done();
+		});
+	});
+
+
+	it('should return the first non-existing file path - with ALPHANUMERIC mode', function (done) {
+		fs.exists.withArgs('/path/to/dir/file-6A.jpg').yields(false);
+
+		uniquefilename.get('/path/to/dir/file.jpg', {mode: 'ALPHANUMERIC'}, 
+			function(filename) {
+
+			assert.equal(filename, '/path/to/dir/file-6A.jpg'); 
+			done();
+		});
+	});
+
+
+
+	it('should return the first non-existing file path - with charset mode', function (done) {
+		fs.exists.withArgs('/path/to/dir/fileqyq.jpg').yields(false);
+
+		uniquefilename.get('/path/to/dir/file.jpg', {mode: 'charset', charset: 'qwerty', separator: 'q'}, 
+			function(filename) {
+
+			assert.equal(filename, '/path/to/dir/fileqyq.jpg'); 
+			done();
+		});
+	});
 });
 
