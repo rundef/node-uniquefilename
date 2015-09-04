@@ -2,7 +2,7 @@
   "name": "uniquefilename",
   "version": "1.0.0",
   "main": "index.js",
-  "description": "Finds a unique filename using incremental numbers",
+  "description": "Finds a unique filename using incremental values",
   "scripts": {
     "test": "mocha --bail"
   },

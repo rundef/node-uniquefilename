@@ -2,32 +2,33 @@
 
 [![NPM Version][npm-image]][npm-url]
 
-A module to get a unique filename.
-*This module is not finished, do not use it yet*
+A module to get a unique filename using incremental values.
 
-## Installing.
+## Installing
 
 #### `npm install uniquefilename`
 
 
-## Basic example.
+## Basic example
 
 ```javascript
 var uniquefilename = require('uniquefilename');
 options = {};
 uniquefilename.get('/path/to/dir/file.jpg', options, function(filename) {
-	// your code here: filename might be "/path/to/dir/file.jpg", "/path/to/dir/file-2.jpg", "/path/to/dir/file-3.jpg", etc...
+	// your code here: filename might be "/path/to/dir/file.jpg", 
+	// "/path/to/dir/file-2.jpg", "/path/to/dir/file-3.jpg", etc...
 	// depending on the files that exist on your filesystem
 });
 ```
 
-## Advanced example.
+## Advanced example
 
 ```javascript
 var uniquefilename = require('uniquefilename');
 options = {};
 uniquefilename.get('/path/to/dir/file.jpg', {separator: '~', paddingCharacter: '0', paddingSize: 4, mode: 'alphanumeric'}, function(filename) {
-	// your code here: filename might be "/path/to/dir/file.jpg", "/path/to/dir/file~000h.jpg", "/path/to/dir/file~00h9.jpg", etc...
+	// your code here: filename might be "/path/to/dir/file.jpg", 
+	// "/path/to/dir/file~000h.jpg", "/path/to/dir/file~00h9.jpg", etc...
 	// depending on the files that exist on your filesystem
 });
 ```
@@ -46,17 +47,24 @@ The mode allows you to specify which characters to use to generate the increment
 
 The default value is `'numeric'`.
 
-  - `'numeric'` The incremental value will only contains the following characters: `1234567890`
-  - `'alpha'` The incremental value will only contains the following characters: `abcdefghijklmnopqrstuvwxyz`
-  - `'ALPHA'` The incremental value will only contains the following characters: `ABCDEFGHIJKLMNOPQRSTUVWXYZ`
-  - `'alphanumeric'` The incremental value will only contains the following characters: `0123456789abcdefghijklmnopqrstuvwxyz`
-  - `'ALPHANUMERIC'` The incremental value will only contains the following characters: `0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ`
-  - `'charset'` TODO
+  - `'numeric'` Using the following characters: `1234567890`
+  - `'alpha'` Using the following characters: `abcdefghijklmnopqrstuvwxyz`
+  - `'ALPHA'` Using the following characters: `ABCDEFGHIJKLMNOPQRSTUVWXYZ`
+  - `'alphanumeric'` Using the following characters: `0123456789abcdefghijklmnopqrstuvwxyz`
+  - `'ALPHANUMERIC'` Using the following characters: `0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ`
+  - `'charset'` You must specify the characters you wish to use in the `charset` option
 
 #### paddingCharacter && paddingSize
 
-TODO: work in progress
+If you wish to left-pad the incremental values with a character, use this option.
+Here's an example :
 
-separator (default: -)
-mode (default: numeric) numeric alpha ALPHA alphanumeric ALPHANUMERIC charset
-if mode == charset, you have to specify the character set you are going to use (ie: 012345)
+```javascript
+var uniquefilename = require('uniquefilename');
+options = {mode: 'alpha', paddingCharacter: '0', paddingSize: 3};
+uniquefilename.get('/path/to/dir/file.jpg', options, function(filename) {
+	// your code here: filename might be "/path/to/dir/file.jpg", 
+	// "/path/to/dir/file-002.jpg", "/path/to/dir/file-045.jpg", etc...
+	// depending on the files that exist on your filesystem
+});
+```
