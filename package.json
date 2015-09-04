@@ -3,19 +3,25 @@
   "version": "1.0.0",
   "main": "index.js",
   "description": "Finds a unique filename using incremental numbers",
+  "scripts": {
+    "test": "mocha --bail"
+  },
   "keywords": [
-    "aaa",
-    "bbb"
+    "unique",
+    "filename",
+    "file",
+    "name",
+    "uniq"
   ],
   "repository": {
     "type": "git",
     "url": "git://github.com/rundef/uniquefilename.git"
   },
-  "scripts": {
-    "test": "mocha"
-  },
   "author": "Mickael Burguet <www.rundef.com>",
-  "license": "ISC",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
   "dependencies": {
   },
   "devDependencies": {

@@ -5,9 +5,8 @@ A module to get a unique filename.
 
 ## Installing.
 
-```
- npm install uniquefilename
-```
+#### `npm install uniquefilename`
+
 
 ## Basic example.
 
@@ -23,3 +22,7 @@ uniquefilename.get('/path/to/dir/file.jpg', options, function(filename) {
 ## Options
 
 TODO: work in progress
+
+separator (default: -)
+mode (default: numeric) numeric alpha ALPHA alphanumeric ALPHANUMERIC charset
+if mode == charset, you have to specify the character set you are going to use (ie: 012345)

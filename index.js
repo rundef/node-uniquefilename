@@ -277,15 +277,21 @@ module.exports.get = function(filepath, options, callback) {
 		options.mode = 'charset';
 		options.charset = 'abcdefghijklmnopqrstuvwxyz';
 	}
+	else if(options.mode == 'alphanumeric') {
+		options.mode = 'charset';
+		options.charset = '0123456789abcdefghijklmnopqrstuvwxyz';
+	}
 	else if(options.mode == 'ALPHA') {
 		options.mode = 'charset';
 		options.charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	}
+	else if(options.mode == 'ALPHANUMERIC') {
+		options.mode = 'charset';
+		options.charset = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	}
 	else if(options.mode != 'charset' || !options.charset) {
 		options.mode = 'numeric';
 	}
-
-
 
 	return findIncrementalUniqueFilename(file, options, callback);
 }
