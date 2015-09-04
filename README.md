@@ -1,6 +1,6 @@
 # uniquefilename
 
-[![NPM Version][npm-image]][npm-url]
+[![npm version](https://badge.fury.io/js/uniquefilename.svg)](http://badge.fury.io/js/uniquefilename)
 
 A module to get a unique filename using incremental values.
 
