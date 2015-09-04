@@ -25,8 +25,8 @@ uniquefilename.get('/path/to/dir/file.jpg', options, function(filename) {
 
 ```javascript
 var uniquefilename = require('uniquefilename');
-options = {};
-uniquefilename.get('/path/to/dir/file.jpg', {separator: '~', paddingCharacter: '0', paddingSize: 4, mode: 'alphanumeric'}, function(filename) {
+options = {separator: '~', paddingCharacter: '0', paddingSize: 4, mode: 'alphanumeric'};
+uniquefilename.get('/path/to/dir/file.jpg', options, function(filename) {
 	// your code here: filename might be "/path/to/dir/file.jpg", 
 	// "/path/to/dir/file~000h.jpg", "/path/to/dir/file~00h9.jpg", etc...
 	// depending on the files that exist on your filesystem
