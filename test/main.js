@@ -3,38 +3,38 @@ var fs 		= require('fs');
 var path 	= require('path');
 var sinon 	= require('sinon');
 
-var uniquefilename = require('../index');
-
+var uniquefilename 	= require('../index');
+var str 			= require('../str');
 
 
 describe('Test utility functions', function() {
 	it('string to number conversion', function (done) {
-		assert.equal(uniquefilename.stringToNumber('0', '01'), 1);
-		assert.equal(uniquefilename.stringToNumber('1', '01'), 2);
-		assert.equal(uniquefilename.stringToNumber('00', '01'), 3);
-		assert.equal(uniquefilename.stringToNumber('01', '01'), 4);
-		assert.equal(uniquefilename.stringToNumber('10', '01'), 5);
-		assert.equal(uniquefilename.stringToNumber('11', '01'), 6);
-		assert.equal(uniquefilename.stringToNumber('000', '01'), 7);
-		assert.equal(uniquefilename.stringToNumber('001', '01'), 8);
-		assert.equal(uniquefilename.stringToNumber('010', '01'), 9);
+		assert.equal(str.stringToNumber('0', '01'), 1);
+		assert.equal(str.stringToNumber('1', '01'), 2);
+		assert.equal(str.stringToNumber('00', '01'), 3);
+		assert.equal(str.stringToNumber('01', '01'), 4);
+		assert.equal(str.stringToNumber('10', '01'), 5);
+		assert.equal(str.stringToNumber('11', '01'), 6);
+		assert.equal(str.stringToNumber('000', '01'), 7);
+		assert.equal(str.stringToNumber('001', '01'), 8);
+		assert.equal(str.stringToNumber('010', '01'), 9);
 
-		assert.equal(uniquefilename.stringToNumber('a', 'abc'), 1);
-		assert.equal(uniquefilename.stringToNumber('b', 'abc'), 2);
-		assert.equal(uniquefilename.stringToNumber('c', 'abc'), 3);
-		assert.equal(uniquefilename.stringToNumber('aa', 'abc'), 4);
-		assert.equal(uniquefilename.stringToNumber('ac', 'abc'), 6);
-		assert.equal(uniquefilename.stringToNumber('ba', 'abc'), 7);
-		assert.equal(uniquefilename.stringToNumber('ca', 'abc'), 10);
-		assert.equal(uniquefilename.stringToNumber('cc', 'abc'), 12);
-		assert.equal(uniquefilename.stringToNumber('aaa', 'abc'), 13);
-		assert.equal(uniquefilename.stringToNumber('bab', 'abc'), 23);
-		assert.equal(uniquefilename.stringToNumber('bbc', 'abc'), 27);
-		assert.equal(uniquefilename.stringToNumber('cab', 'abc'), 32);
-		assert.equal(uniquefilename.stringToNumber('cca', 'abc'), 37);
-		assert.equal(uniquefilename.stringToNumber('ccc', 'abc'), 39);
-		assert.equal(uniquefilename.stringToNumber('aaaa', 'abc'), 40);
-		assert.equal(uniquefilename.stringToNumber('abab', 'abc'), 50);
+		assert.equal(str.stringToNumber('a', 'abc'), 1);
+		assert.equal(str.stringToNumber('b', 'abc'), 2);
+		assert.equal(str.stringToNumber('c', 'abc'), 3);
+		assert.equal(str.stringToNumber('aa', 'abc'), 4);
+		assert.equal(str.stringToNumber('ac', 'abc'), 6);
+		assert.equal(str.stringToNumber('ba', 'abc'), 7);
+		assert.equal(str.stringToNumber('ca', 'abc'), 10);
+		assert.equal(str.stringToNumber('cc', 'abc'), 12);
+		assert.equal(str.stringToNumber('aaa', 'abc'), 13);
+		assert.equal(str.stringToNumber('bab', 'abc'), 23);
+		assert.equal(str.stringToNumber('bbc', 'abc'), 27);
+		assert.equal(str.stringToNumber('cab', 'abc'), 32);
+		assert.equal(str.stringToNumber('cca', 'abc'), 37);
+		assert.equal(str.stringToNumber('ccc', 'abc'), 39);
+		assert.equal(str.stringToNumber('aaaa', 'abc'), 40);
+		assert.equal(str.stringToNumber('abab', 'abc'), 50);
 
 
 		done();
@@ -43,34 +43,34 @@ describe('Test utility functions', function() {
 
 
 	it('number to string conversion', function (done) {
-		assert.equal(uniquefilename.numberToString(1, '01'), '0');
-		assert.equal(uniquefilename.numberToString(2, '01'), '1');
-		assert.equal(uniquefilename.numberToString(3, '01'), '00');
-		assert.equal(uniquefilename.numberToString(4, '01'), '01');
-		assert.equal(uniquefilename.numberToString(5, '01'), '10');
-		assert.equal(uniquefilename.numberToString(6, '01'), '11');
-		assert.equal(uniquefilename.numberToString(7, '01'), '000');
-		assert.equal(uniquefilename.numberToString(8, '01'), '001');
-		assert.equal(uniquefilename.numberToString(9, '01'), '010');
+		assert.equal(str.numberToString(1, '01'), '0');
+		assert.equal(str.numberToString(2, '01'), '1');
+		assert.equal(str.numberToString(3, '01'), '00');
+		assert.equal(str.numberToString(4, '01'), '01');
+		assert.equal(str.numberToString(5, '01'), '10');
+		assert.equal(str.numberToString(6, '01'), '11');
+		assert.equal(str.numberToString(7, '01'), '000');
+		assert.equal(str.numberToString(8, '01'), '001');
+		assert.equal(str.numberToString(9, '01'), '010');
 
 
 		 
-		assert.equal(uniquefilename.numberToString(1, 'abc'), 'a');
-		assert.equal(uniquefilename.numberToString(2, 'abc'), 'b');
-		assert.equal(uniquefilename.numberToString(3, 'abc'), 'c');
-		assert.equal(uniquefilename.numberToString(4, 'abc'), 'aa');
-		assert.equal(uniquefilename.numberToString(6, 'abc'), 'ac');
-		assert.equal(uniquefilename.numberToString(7, 'abc'), 'ba');
-		assert.equal(uniquefilename.numberToString(10, 'abc'), 'ca');
-		assert.equal(uniquefilename.numberToString(12, 'abc'), 'cc');
-		assert.equal(uniquefilename.numberToString(13, 'abc'), 'aaa');
-		assert.equal(uniquefilename.numberToString(23, 'abc'), 'bab');
-		assert.equal(uniquefilename.numberToString(27, 'abc'), 'bbc');
-		assert.equal(uniquefilename.numberToString(32, 'abc'), 'cab');
-		assert.equal(uniquefilename.numberToString(37, 'abc'), 'cca');
-		assert.equal(uniquefilename.numberToString(39, 'abc'), 'ccc');
-		assert.equal(uniquefilename.numberToString(40, 'abc'), 'aaaa');
-		assert.equal(uniquefilename.numberToString(50, 'abc'), 'abab');
+		assert.equal(str.numberToString(1, 'abc'), 'a');
+		assert.equal(str.numberToString(2, 'abc'), 'b');
+		assert.equal(str.numberToString(3, 'abc'), 'c');
+		assert.equal(str.numberToString(4, 'abc'), 'aa');
+		assert.equal(str.numberToString(6, 'abc'), 'ac');
+		assert.equal(str.numberToString(7, 'abc'), 'ba');
+		assert.equal(str.numberToString(10, 'abc'), 'ca');
+		assert.equal(str.numberToString(12, 'abc'), 'cc');
+		assert.equal(str.numberToString(13, 'abc'), 'aaa');
+		assert.equal(str.numberToString(23, 'abc'), 'bab');
+		assert.equal(str.numberToString(27, 'abc'), 'bbc');
+		assert.equal(str.numberToString(32, 'abc'), 'cab');
+		assert.equal(str.numberToString(37, 'abc'), 'cca');
+		assert.equal(str.numberToString(39, 'abc'), 'ccc');
+		assert.equal(str.numberToString(40, 'abc'), 'aaaa');
+		assert.equal(str.numberToString(50, 'abc'), 'abab');
 
 		
 		done();
@@ -80,22 +80,22 @@ describe('Test utility functions', function() {
 
 
 	it('reverse function', function(done) {
-		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(77, 'abc'), 'abc'), 77);
-		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(103, 'abc'), 'abc'), 103);
-		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(177, 'abc'), 'abc'), 177);
-		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(5, 'abcdefghijklmn'), 'abcdefghijklmn'), 5);
-		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(33, 'abcdefghijklmn'), 'abcdefghijklmn'), 33);
-		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(95, 'abcdefghijklmn'), 'abcdefghijklmn'), 95);
-		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(100, 'abcdefghijklmn'), 'abcdefghijklmn'), 100);
-		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(112, 'abcdefghijklmn'), 'abcdefghijklmn'), 112);
-		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(123, 'abcdefghijklmn'), 'abcdefghijklmn'), 123);
-		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(166, 'abcdefghijklmn'), 'abcdefghijklmn'), 166);
-		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(167, 'abcdefghijklmn'), 'abcdefghijklmn'), 167);
-		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(177, '!24'), '!24'), 177);
-		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(201, '!^&?'), '!^&?'), 201);
-		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(202, '!^&?'), '!^&?'), 202);
-		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(203, '!^&?'), '!^&?'), 203);
-		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(244, '!^&?'), '!^&?'), 244);
+		assert.equal(str.stringToNumber(str.numberToString(77, 'abc'), 'abc'), 77);
+		assert.equal(str.stringToNumber(str.numberToString(103, 'abc'), 'abc'), 103);
+		assert.equal(str.stringToNumber(str.numberToString(177, 'abc'), 'abc'), 177);
+		assert.equal(str.stringToNumber(str.numberToString(5, 'abcdefghijklmn'), 'abcdefghijklmn'), 5);
+		assert.equal(str.stringToNumber(str.numberToString(33, 'abcdefghijklmn'), 'abcdefghijklmn'), 33);
+		assert.equal(str.stringToNumber(str.numberToString(95, 'abcdefghijklmn'), 'abcdefghijklmn'), 95);
+		assert.equal(str.stringToNumber(str.numberToString(100, 'abcdefghijklmn'), 'abcdefghijklmn'), 100);
+		assert.equal(str.stringToNumber(str.numberToString(112, 'abcdefghijklmn'), 'abcdefghijklmn'), 112);
+		assert.equal(str.stringToNumber(str.numberToString(123, 'abcdefghijklmn'), 'abcdefghijklmn'), 123);
+		assert.equal(str.stringToNumber(str.numberToString(166, 'abcdefghijklmn'), 'abcdefghijklmn'), 166);
+		assert.equal(str.stringToNumber(str.numberToString(167, 'abcdefghijklmn'), 'abcdefghijklmn'), 167);
+		assert.equal(str.stringToNumber(str.numberToString(177, '!24'), '!24'), 177);
+		assert.equal(str.stringToNumber(str.numberToString(201, '!^&?'), '!^&?'), 201);
+		assert.equal(str.stringToNumber(str.numberToString(202, '!^&?'), '!^&?'), 202);
+		assert.equal(str.stringToNumber(str.numberToString(203, '!^&?'), '!^&?'), 203);
+		assert.equal(str.stringToNumber(str.numberToString(244, '!^&?'), '!^&?'), 244);
 		
 		done();
 	});
