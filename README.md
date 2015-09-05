@@ -1,6 +1,7 @@
 # uniquefilename
 
-[![npm version](https://badge.fury.io/js/uniquefilename.svg)](http://badge.fury.io/js/uniquefilename)
+[![npm version](https://badge.fury.io/js/uniquefilename.svg)](http://badge.fury.io/js/uniquefilename) 
+[![bitHound Score](https://www.bithound.io/github/rundef/uniquefilename/badges/score.svg)](https://www.bithound.io/github/rundef/uniquefilename)
 
 A module to get a unique filename using incremental values.
 

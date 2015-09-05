@@ -46,13 +46,13 @@ function numberToString(nbr, charset) {
 	}
 
 
-	if(str_len == 0)
+	if(str_len === 0)
 		return null;
 
 
 	var str = '';
 	while(--str_len >= 0) {
-		if(str_len == 0) {
+		if(str_len === 0) {
 			str += charset.charAt(nbr - 1);
 			break;
 		}
@@ -60,7 +60,7 @@ function numberToString(nbr, charset) {
 		
 		str_this_len = Math.pow(charset_len, str_len);
 		var initial = 0;
-		var tmp = 0;
+		tmp = 0;
 		for(tmp = str_len - 1; tmp >= 1; tmp--) {
 			initial += Math.pow(charset_len, tmp);
 		}
@@ -129,39 +129,32 @@ module.exports.get = function(filepath, options, callback) {
 	file.ext 	= path.extname(filepath);
 	file.base 	= path.basename(filepath, file.ext);
 
-	if(!options.separator) {
-		options.separator = '-';
+	options.separator = options.separator || '-';
+	options.mode = options.mode || 'numeric';
+
+	charsets = {
+		"alpha": 			"abcdefghijklmnopqrstuvwxyz",
+		"alphanumeric": 	"0123456789abcdefghijklmnopqrstuvwxyz",
+		"ALPHA": 			"ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+		"ALPHANUMERIC" : 	"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+	};
+
+	if(options.mode != 'numeric') {
+		if(charsets[options.mode]) {
+			options.charset = charsets[options.mode];
+			options.mode = 'charset';
+		}
+		else if(options.mode != 'charset' || (options.mode == 'charset' && !options.charset)) {
+			options.mode = 'numeric';
+		}
 	}
 
 	if(options.paddingSize && !options.paddingCharacter) {
 		options.paddingCharacter = '0';
 	}
 
-	if(!options.mode) {
-		options.mode = 'numeric';
-	}
-	else if(options.mode == 'alpha') {
-		options.mode = 'charset';
-		options.charset = 'abcdefghijklmnopqrstuvwxyz';
-	}
-	else if(options.mode == 'alphanumeric') {
-		options.mode = 'charset';
-		options.charset = '0123456789abcdefghijklmnopqrstuvwxyz';
-	}
-	else if(options.mode == 'ALPHA') {
-		options.mode = 'charset';
-		options.charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-	}
-	else if(options.mode == 'ALPHANUMERIC') {
-		options.mode = 'charset';
-		options.charset = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-	}
-	else if(options.mode != 'charset' || !options.charset) {
-		options.mode = 'numeric';
-	}
-
 	return findIncrementalUniqueFilename(file, options, callback);
-}
+};
 
 module.exports.numberToString = numberToString;
 module.exports.stringToNumber = stringToNumber;
