@@ -75,6 +75,30 @@ describe('Test utility functions', function() {
 		
 		done();
 	});
+
+
+
+
+	it('reverse function', function(done) {
+		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(77, 'abc'), 'abc'), 77);
+		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(103, 'abc'), 'abc'), 103);
+		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(177, 'abc'), 'abc'), 177);
+		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(5, 'abcdefghijklmn'), 'abcdefghijklmn'), 5);
+		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(33, 'abcdefghijklmn'), 'abcdefghijklmn'), 33);
+		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(95, 'abcdefghijklmn'), 'abcdefghijklmn'), 95);
+		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(100, 'abcdefghijklmn'), 'abcdefghijklmn'), 100);
+		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(112, 'abcdefghijklmn'), 'abcdefghijklmn'), 112);
+		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(123, 'abcdefghijklmn'), 'abcdefghijklmn'), 123);
+		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(166, 'abcdefghijklmn'), 'abcdefghijklmn'), 166);
+		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(167, 'abcdefghijklmn'), 'abcdefghijklmn'), 167);
+		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(177, '!24'), '!24'), 177);
+		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(201, '!^&?'), '!^&?'), 201);
+		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(202, '!^&?'), '!^&?'), 202);
+		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(203, '!^&?'), '!^&?'), 203);
+		assert.equal(uniquefilename.stringToNumber(uniquefilename.numberToString(244, '!^&?'), '!^&?'), 244);
+		
+		done();
+	});
 });
 
 

@@ -68,3 +68,29 @@ uniquefilename.get('/path/to/dir/file.jpg', options, function(filename) {
 	// depending on the files that exist on your filesystem
 });
 ```
+
+## Using it with multer
+
+Multer is a node.js middleware for handling `multipart/form-data`, which is primarily used for uploading files.
+The following example shows you how to use multer along with this module to move an uploaded file to a unique filename :
+
+```javascript
+var multer 			= require('multer');
+var path 			= require('path');
+var uniquefilename 	= require('uniquefilename');
+
+router.use(multer({
+	storage: multer.diskStorage({
+		destination: function (req, file, cb) {
+			cb(null, './public/uploads/')
+		},
+		filename: function (req, file, cb) {
+			originalname = path.resolve('./public/uploads/' + file.originalname);
+			options = {};
+			uniquefilename.get(originalname, options, function(filename) {
+				 cb(null, path.basename(filename));
+			});
+		}
+	})
+}).single('thumbnail'));
+```
