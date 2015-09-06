@@ -1,4 +1,14 @@
-function stringToNumber(str, charset) {
+function sumOfPowerFromOne(base, maxpower) {
+	var value = 0;
+	for(var tmp = maxpower; tmp >= 1; tmp--) {
+		value += Math.pow(base, tmp);
+	}
+	return value;
+}
+
+
+
+module.exports.stringToNumber = function(str, charset) {
 	var len 		= str.length;
 	var charset_len = charset.length;
 	var ret 		= 0;
@@ -14,20 +24,15 @@ function stringToNumber(str, charset) {
 }
 
 
-function numberToString(nbr, charset) {
-	if(nbr == 1)
-		return charset.charAt(0);
 
+module.exports.numberToString = function(nbr, charset) {
 	var charset_len 	= charset.length;
 	var str_len  		= 0;
 	var str_this_len 	= 0;
 	var tmp;
 
-	for(var maxpower = 5; maxpower >= 0; maxpower--) {
-		var maxvalue = Math.pow(charset_len, maxpower);
-		for(tmp = maxpower - 1; tmp >= 1; tmp--) {
-			maxvalue += Math.pow(charset_len, tmp);
-		}
+	for(var maxpower = 20; maxpower >= 0; maxpower--) {
+		var maxvalue = sumOfPowerFromOne(charset_len, maxpower);
 
 		if(maxvalue < nbr) {
 			str_len  	 = maxpower + 1;
@@ -51,10 +56,9 @@ function numberToString(nbr, charset) {
 
 		
 		str_this_len = Math.pow(charset_len, str_len);
-		var initial = 0;
-		for(tmp = str_len - 1; tmp >= 1; tmp--) {
-			initial += Math.pow(charset_len, tmp);
-		}
+		var initial = sumOfPowerFromOne(charset_len, str_len - 1);
+
+
 		for(tmp = charset_len; tmp >= 1; tmp--) {
 			var tmp_cmp = initial + (tmp * str_this_len);
 			if(tmp_cmp < nbr)
@@ -67,6 +71,3 @@ function numberToString(nbr, charset) {
 
 	return str;
 }
-
-module.exports.numberToString = numberToString;
-module.exports.stringToNumber = stringToNumber;
