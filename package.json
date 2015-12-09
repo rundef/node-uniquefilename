@@ -5,6 +5,7 @@
   "description": "Finds a unique filename using incremental values",
   "scripts": {
     "test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/.bin/_mocha",
+    "test-cov": "istanbul cover --report html node_modules/mocha/bin/_mocha --check-leaks",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
   "keywords": [

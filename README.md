@@ -17,9 +17,9 @@ A module to get a unique filename using incremental values.
 var uniquefilename = require('uniquefilename');
 options = {};
 uniquefilename.get('/path/to/dir/file.jpg', options, function(filename) {
-	// your code here: filename might be "/path/to/dir/file.jpg", 
-	// "/path/to/dir/file-2.jpg", "/path/to/dir/file-3.jpg", etc...
-	// depending on the files that exist on your filesystem
+  // your code here: filename might be "/path/to/dir/file.jpg", 
+  // "/path/to/dir/file-2.jpg", "/path/to/dir/file-3.jpg", etc...
+  // depending on the files that exist on your filesystem
 });
 ```
 
@@ -29,9 +29,9 @@ uniquefilename.get('/path/to/dir/file.jpg', options, function(filename) {
 var uniquefilename = require('uniquefilename');
 options = {separator: '~', paddingCharacter: '0', paddingSize: 4, mode: 'alphanumeric'};
 uniquefilename.get('/path/to/dir/file.jpg', options, function(filename) {
-	// your code here: filename might be "/path/to/dir/file.jpg", 
-	// "/path/to/dir/file~000h.jpg", "/path/to/dir/file~00h9.jpg", etc...
-	// depending on the files that exist on your filesystem
+  // your code here: filename might be "/path/to/dir/file.jpg", 
+  // "/path/to/dir/file~000h.jpg", "/path/to/dir/file~00h9.jpg", etc...
+  // depending on the files that exist on your filesystem
 });
 ```
 
@@ -65,9 +65,9 @@ Here's an example :
 var uniquefilename = require('uniquefilename');
 options = {mode: 'alpha', paddingCharacter: '0', paddingSize: 3};
 uniquefilename.get('/path/to/dir/file.jpg', options, function(filename) {
-	// your code here: filename might be "/path/to/dir/file.jpg", 
-	// "/path/to/dir/file-002.jpg", "/path/to/dir/file-045.jpg", etc...
-	// depending on the files that exist on your filesystem
+  // your code here: filename might be "/path/to/dir/file.jpg", 
+  // "/path/to/dir/file-002.jpg", "/path/to/dir/file-045.jpg", etc...
+  // depending on the files that exist on your filesystem
 });
 ```
 
@@ -77,22 +77,22 @@ Multer is a node.js middleware for handling `multipart/form-data`, which is prim
 The following example shows you how to use multer along with this module to move an uploaded file to a unique filename :
 
 ```javascript
-var multer 			= require('multer');
-var path 			= require('path');
-var uniquefilename 	= require('uniquefilename');
+var multer      = require('multer');
+var path      = require('path');
+var uniquefilename  = require('uniquefilename');
 
 router.use(multer({
-	storage: multer.diskStorage({
-		destination: function (req, file, cb) {
-			cb(null, './public/uploads/')
-		},
-		filename: function (req, file, cb) {
-			originalname = path.resolve('./public/uploads/' + file.originalname);
-			options = {};
-			uniquefilename.get(originalname, options, function(filename) {
-				 cb(null, path.basename(filename));
-			});
-		}
-	})
+  storage: multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/uploads/')
+    },
+    filename: function (req, file, cb) {
+      originalname = path.resolve('./public/uploads/' + file.originalname);
+      options = {};
+      uniquefilename.get(originalname, options, function(filename) {
+         cb(null, path.basename(filename));
+      });
+    }
+  })
 }).single('thumbnail'));
 ```
