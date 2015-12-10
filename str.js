@@ -21,7 +21,7 @@ module.exports.stringToNumber = function(str, charset) {
   }
 
   return ret;
-}
+};
 
 
 
@@ -70,4 +70,4 @@ module.exports.numberToString = function(nbr, charset) {
   }
 
   return str;
-}
+};
