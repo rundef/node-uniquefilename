@@ -1,6 +1,7 @@
 # uniquefilename
 
 [![npm version](https://badge.fury.io/js/uniquefilename.svg)](http://badge.fury.io/js/uniquefilename) 
+[![Travis](https://travis-ci.org/rundef/uniquefilename.svg?branch=master)](https://travis-ci.org/rundef/uniquefilename?branch=master) 
 [![bitHound Score](https://www.bithound.io/github/rundef/uniquefilename/badges/score.svg)](https://www.bithound.io/github/rundef/uniquefilename)
 [![Coverage Status](https://coveralls.io/repos/rundef/uniquefilename/badge.svg?branch=master&service=github)](https://coveralls.io/github/rundef/uniquefilename?branch=master)
 
