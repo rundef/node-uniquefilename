@@ -1,35 +1,51 @@
 # uniquefilename
 
 [![npm version](https://badge.fury.io/js/uniquefilename.svg)](http://badge.fury.io/js/uniquefilename) 
-[![bitHound Score](https://www.bithound.io/github/rundef/uniquefilename/badges/score.svg)](https://www.bithound.io/github/rundef/uniquefilename)
-[![Coverage Status](https://coveralls.io/repos/rundef/uniquefilename/badge.svg?branch=master&service=github)](https://coveralls.io/github/rundef/uniquefilename?branch=master)
+[![bitHound Score](https://www.bithound.io/github/rundef/node-uniquefilename/badges/score.svg)](https://www.bithound.io/github/rundef/node-uniquefilename)
+[![Coverage Status](https://coveralls.io/repos/rundef/node-uniquefilename/badge.svg?branch=master&service=github)](https://coveralls.io/github/rundef/node-uniquefilename?branch=master)
 
 A module to get a unique filename using incremental values.
 
-## Installing
+## Install
 
-#### `npm install uniquefilename`
+```bash
+npm install uniquefilename
+```
 
+## Usage
 
-## Basic example
+#### uniquefilename.get(filepath, [options], [callback])
+
+### Basic example
 
 ```javascript
 var uniquefilename = require('uniquefilename');
 options = {};
 uniquefilename.get('/path/to/dir/file.jpg', options, function(filename) {
-  // your code here: filename might be "/path/to/dir/file.jpg", 
+  // filename might be "/path/to/dir/file.jpg", 
   // "/path/to/dir/file-2.jpg", "/path/to/dir/file-3.jpg", etc...
   // depending on the files that exist on your filesystem
 });
 ```
 
-## Advanced example
+### Example with promises
+
+If a callback is not supplied, a Promise is returned ([using bluebird](https://www.npmjs.com/package/bluebird)).
+
+```javascript
+var uniquefilename = require('uniquefilename');
+uniquefilename.get('/path/to/dir/file.jpg', {}).then(function (filename) {
+  console.log(filename);
+});
+```
+
+### Advanced example
 
 ```javascript
 var uniquefilename = require('uniquefilename');
 options = {separator: '~', paddingCharacter: '0', paddingSize: 4, mode: 'alphanumeric'};
 uniquefilename.get('/path/to/dir/file.jpg', options, function(filename) {
-  // your code here: filename might be "/path/to/dir/file.jpg", 
+  // filename might be "/path/to/dir/file.jpg", 
   // "/path/to/dir/file~000h.jpg", "/path/to/dir/file~00h9.jpg", etc...
   // depending on the files that exist on your filesystem
 });
@@ -65,7 +81,7 @@ Here's an example :
 var uniquefilename = require('uniquefilename');
 options = {mode: 'alpha', paddingCharacter: '0', paddingSize: 3};
 uniquefilename.get('/path/to/dir/file.jpg', options, function(filename) {
-  // your code here: filename might be "/path/to/dir/file.jpg", 
+  // filename might be "/path/to/dir/file.jpg", 
   // "/path/to/dir/file-002.jpg", "/path/to/dir/file-045.jpg", etc...
   // depending on the files that exist on your filesystem
 });

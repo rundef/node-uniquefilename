@@ -1,10 +1,9 @@
-var assert  = require('assert');
-var fs    = require('fs');
-var path  = require('path');
-var sinon   = require('sinon');
-
-var uniquefilename  = require('../index');
-var str       = require('../str');
+var assert = require('assert')
+  , fs = require('fs')
+  , path = require('path')
+  , sinon = require('sinon')
+  , uniquefilename = require('../index')
+  , str = require('../str');
 
 
 describe('Test utility functions', function() {
@@ -234,6 +233,27 @@ describe('Get non existing file path', function() {
       function(filename) {
 
       assert.equal(filename, '/path/to/dir/fileqyq.jpg'); 
+      done();
+    });
+  });
+});
+
+
+
+describe('Promises', function() {
+  beforeEach(function () {
+    sinon.stub(fs, 'exists').yields(true);
+  });
+
+  afterEach(function () {
+    fs.exists.restore();
+  });
+
+  it('should work with promises', function (done) {
+    fs.exists.withArgs('/path/to/dir/file.jpg').yields(false);
+
+    uniquefilename.get('/path/to/dir/file.jpg').then(function (filename) {
+      assert.equal(filename, '/path/to/dir/file.jpg'); 
       done();
     });
   });
