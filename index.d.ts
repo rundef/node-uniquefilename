@@ -1,0 +1,1 @@
+export function get(path: string, options?: any, callback?: Function): any;
