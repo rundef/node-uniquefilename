@@ -5,7 +5,7 @@
 [![bitHound Score](https://www.bithound.io/github/rundef/node-uniquefilename/badges/score.svg)](https://www.bithound.io/github/rundef/node-uniquefilename)
 [![Coverage Status](https://coveralls.io/repos/rundef/node-uniquefilename/badge.svg?branch=master&service=github)](https://coveralls.io/github/rundef/node-uniquefilename?branch=master)
 
-A module to get a unique filename using incremental values.
+A module to get a filename - that doesn't already exist on the filesystem - using incremental values .
 
 ## Install
 
