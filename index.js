@@ -56,6 +56,9 @@ function findIncrementalUniqueFilename(file, options, callback) {
   var filename;
   var append = '';
 
+  if(options.alwaysAppend && !file.increment)
+    file.increment = 1;
+
   if (file.increment) {
     if(options.mode == 'numeric') {
       append = '' + file.increment;
@@ -63,8 +66,8 @@ function findIncrementalUniqueFilename(file, options, callback) {
     else {
       append = str.numberToString(file.increment, options.charset);
     }
-    
-    
+
+
 
     if(options.paddingSize) {
       while(append.length < options.paddingSize) {
