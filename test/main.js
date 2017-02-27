@@ -236,6 +236,17 @@ describe('Get non existing file path', function() {
       done();
     });
   });
+
+  it('should return the first non-existing file path - with separator and attachment', function (done) {
+    fs.exists.withArgs('/path/to/dir/file-1.jpg').yields(false);
+
+    uniquefilename.get('/path/to/dir/file.jpg', {alwaysAppend: true},
+      function(filename) {
+
+      assert.equal(filename, '/path/to/dir/file-1.jpg');
+      done();
+    });
+  });
 });
 
 
