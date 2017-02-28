@@ -1,6 +1,6 @@
 {
   "name": "uniquefilename",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "main": "index.js",
   "description": "Finds a unique filename using incremental values",
   "scripts": {
