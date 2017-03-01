@@ -88,6 +88,12 @@ uniquefilename.get('/path/to/dir/file.jpg', options, function(filename) {
 });
 ```
 
+#### alwaysAppend
+
+If `alwaysAppend` is `true` filenames will include the seperator and attachment from the first request. So instead of
+`file.jpg`, `file-2.jpg` you'd get `file-1.jpg`, `file-2.jpg`
+
+
 ## Using it with multer
 
 Multer is a node.js middleware for handling `multipart/form-data`, which is primarily used for uploading files.
