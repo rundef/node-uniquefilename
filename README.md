@@ -90,8 +90,8 @@ uniquefilename.get('/path/to/dir/file.jpg', options, function(filename) {
 
 #### alwaysAppend
 
-If `alwaysAppend` is `true` filenames will include the seperator and attachment from the first request. So instead of
-`file.jpg`, `file-2.jpg` you'd get `file-1.jpg`, `file-2.jpg`
+If `alwaysAppend` is `true` filenames will include the separator and attachment from the first request. So instead of
+`file.jpg`, `file-2.jpg` you'd get `file-1.jpg`, `file-2.jpg`.
 
 
 ## Using it with multer
